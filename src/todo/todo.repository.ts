@@ -1,17 +1,16 @@
 import { Model } from 'mongoose';
 import { Injectable, Inject } from '@nestjs/common';
-import { Todo } from './todo.interface';
-import { CreateTodoDto, UpdateTodoDto } from './todo.dto';
+import { CreateTodoDto, ResponseTodoDto, UpdateTodoDto } from './todo.dto';
 import { TodoStatus } from './todo.enum';
 
 @Injectable()
 export class TodoRepository {
   constructor(
     @Inject('TODO_MODEL')
-    private todoModel: Model<Todo>,
+    private todoModel: Model<ResponseTodoDto>,
   ) {}
 
-  async create(createTodoDto: CreateTodoDto): Promise<Todo> {
+  async create(createTodoDto: CreateTodoDto): Promise<ResponseTodoDto> {
     const createdCat = new this.todoModel({
       ...createTodoDto,
       status: TodoStatus.TODO,
@@ -19,15 +18,18 @@ export class TodoRepository {
     return createdCat.save();
   }
 
-  async findAll(): Promise<Todo[]> {
+  async findAll(): Promise<ResponseTodoDto[]> {
     return this.todoModel.find().exec();
   }
 
-  async findById(id: string): Promise<Todo> {
+  async findById(id: string): Promise<ResponseTodoDto> {
     return this.todoModel.findById(id).exec();
   }
 
-  async update(id: string, updateTodoDto: UpdateTodoDto): Promise<Todo> {
+  async update(
+    id: string,
+    updateTodoDto: UpdateTodoDto,
+  ): Promise<ResponseTodoDto> {
     return this.todoModel
       .findByIdAndUpdate(id, updateTodoDto, { new: true })
       .exec();

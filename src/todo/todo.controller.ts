@@ -7,34 +7,51 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
-import { CreateTodoDto, UpdateTodoDto } from './todo.dto';
-import { Todo } from './todo.interface';
+import { CreateTodoDto, ResponseTodoDto, UpdateTodoDto } from './todo.dto';
 import { TodoService } from './todo.service';
+import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('todos')
 @Controller('todos')
 export class TodoController {
   constructor(readonly todoService: TodoService) {}
 
   @Post()
-  async create(@Body() createTodoDto: CreateTodoDto): Promise<Todo> {
+  @ApiCreatedResponse({
+    description: 'The record has been successfully created.',
+    type: ResponseTodoDto,
+  })
+  async create(@Body() createTodoDto: CreateTodoDto): Promise<ResponseTodoDto> {
     return this.todoService.create(createTodoDto);
   }
 
   @Get()
-  findAll(): Promise<Todo[]> {
+  @ApiCreatedResponse({
+    description: 'The record has been successfully created.',
+    type: [ResponseTodoDto],
+  })
+  findAll(): Promise<ResponseTodoDto[]> {
     return this.todoService.findAll();
   }
 
   @Get(':id')
-  findById(@Param('id') id: string): Promise<Todo> {
+  @ApiCreatedResponse({
+    description: 'The record has been successfully created.',
+    type: ResponseTodoDto,
+  })
+  findById(@Param('id') id: string): Promise<ResponseTodoDto> {
     return this.todoService.findById(id);
   }
 
   @Put(':id')
+  @ApiCreatedResponse({
+    description: 'The record has been successfully created.',
+    type: ResponseTodoDto,
+  })
   update(
     @Param('id') id: string,
     @Body() updateTodoDto: UpdateTodoDto,
-  ): Promise<Todo> {
+  ): Promise<ResponseTodoDto> {
     return this.todoService.update(id, updateTodoDto);
   }
 
