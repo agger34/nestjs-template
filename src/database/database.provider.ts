@@ -4,6 +4,6 @@ export const DatabaseProviders = [
   {
     provide: 'DATABASE_CONNECTION',
     useFactory: (): Promise<typeof mongoose> =>
-      mongoose.connect('mongodb://localhost:27017/nest-template'),
+      mongoose.connect(process.env.MONGO_URI),
   },
 ];
