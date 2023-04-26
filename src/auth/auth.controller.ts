@@ -7,7 +7,7 @@ import {
   Request,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from '../guard/auth.guard';
 import { ResponseAuthDto, SignInDto, SignUpDto } from './auth.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 

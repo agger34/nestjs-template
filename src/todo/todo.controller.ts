@@ -6,13 +6,22 @@ import {
   Param,
   Put,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateTodoDto, ResponseTodoDto, UpdateTodoDto } from './todo.dto';
 import { TodoService } from './todo.service';
-import { ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
+import { Roles } from 'src/decorator/auth.decorator';
+import { UserRole } from 'src/shared/enum';
+import { AuthGuard } from 'src/guard/auth.guard';
+import { RolesGuard } from 'src/guard/role.guard';
 
 @ApiTags('todos')
 @Controller('todos')
+@ApiBearerAuth()
+@UseGuards(RolesGuard)
+@UseGuards(AuthGuard)
+@Roles(UserRole.ADMIN)
 export class TodoController {
   constructor(readonly todoService: TodoService) {}
 

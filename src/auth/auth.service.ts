@@ -28,7 +28,11 @@ export class AuthService {
         password: password,
       });
 
-      const payload = { userName: createdUser.userName, sub: createdUser.id };
+      const payload = {
+        userName: createdUser.userName,
+        sub: createdUser.id,
+        roles: createdUser.roles,
+      };
       return {
         accessToken: await this.jwtService.signAsync(payload),
       } as ResponseAuthDto;
@@ -44,7 +48,11 @@ export class AuthService {
     if (!isMatchPassword) {
       throw new UnauthorizedException();
     }
-    const payload = { userName: user.userName, sub: user.id };
+    const payload = {
+      userName: user.userName,
+      sub: user.id,
+      roles: user.roles,
+    };
     return {
       accessToken: await this.jwtService.signAsync(payload),
     } as ResponseAuthDto;

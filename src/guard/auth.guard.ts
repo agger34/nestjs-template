@@ -5,7 +5,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { JWT } from './auth.constant';
+import { JWT } from '../auth/auth.constant';
 import { Reflector } from '@nestjs/core';
 
 @Injectable()
