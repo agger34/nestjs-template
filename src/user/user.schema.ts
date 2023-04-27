@@ -3,7 +3,7 @@ import { UserRole } from 'src/shared/enum';
 
 export const UserSchema = new mongoose.Schema(
   {
-    userName: String,
+    username: String,
     password: String,
     roles: { type: [], default: [UserRole.USER] },
   },

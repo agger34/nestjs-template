@@ -25,7 +25,7 @@ export class UserRepository {
     return this.userModel.findById(id).exec();
   }
 
-  async findOne(userName: string): Promise<ResponseUserDto> {
-    return this.userModel.findOne({ userName }).exec();
+  async findOne(username: string): Promise<ResponseUserDto> {
+    return this.userModel.findOne({ username }).exec();
   }
 }

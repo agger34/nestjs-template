@@ -13,19 +13,19 @@ import { TodoService } from './todo.service';
 import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/decorator/auth.decorator';
 import { UserRole } from 'src/shared/enum';
-import { AuthGuard } from 'src/guard/auth.guard';
 import { RolesGuard } from 'src/guard/role.guard';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiTags('todos')
 @Controller('todos')
 @ApiBearerAuth()
 @UseGuards(RolesGuard)
-@UseGuards(AuthGuard)
-@Roles(UserRole.ADMIN)
+@UseGuards(JwtAuthGuard)
 export class TodoController {
   constructor(readonly todoService: TodoService) {}
 
   @Post()
+  @Roles(UserRole.ADMIN)
   @ApiCreatedResponse({
     description: 'The record has been successfully created.',
     type: ResponseTodoDto,
@@ -35,6 +35,7 @@ export class TodoController {
   }
 
   @Get()
+  @Roles(UserRole.USER)
   @ApiCreatedResponse({
     description: 'The record has been successfully created.',
     type: [ResponseTodoDto],
@@ -44,6 +45,7 @@ export class TodoController {
   }
 
   @Get(':id')
+  @Roles(UserRole.USER)
   @ApiCreatedResponse({
     description: 'The record has been successfully created.',
     type: ResponseTodoDto,
@@ -53,6 +55,7 @@ export class TodoController {
   }
 
   @Put(':id')
+  @Roles(UserRole.ADMIN)
   @ApiCreatedResponse({
     description: 'The record has been successfully created.',
     type: ResponseTodoDto,
@@ -65,6 +68,7 @@ export class TodoController {
   }
 
   @Delete(':id')
+  @Roles(UserRole.ADMIN)
   delete(@Param('id') id: string): Promise<void> {
     return this.todoService.delete(id);
   }

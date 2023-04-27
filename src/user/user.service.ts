@@ -12,8 +12,8 @@ export class UserService {
     return this.userRepository.create(createUserDto);
   }
 
-  async findOne(userName: string): Promise<ResponseUserDto> {
-    return this.userRepository.findOne(userName);
+  async findOne(username: string): Promise<ResponseUserDto> {
+    return this.userRepository.findOne(username);
   }
 
   async findById(id: string): Promise<ResponseUserDto> {

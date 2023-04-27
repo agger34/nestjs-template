@@ -3,11 +3,11 @@ import { IsNotEmpty, isNotEmpty } from 'class-validator';
 
 export class SignUpDto {
   @ApiProperty({
-    description: 'The userName of account.',
+    description: 'The username of account.',
     required: true,
   })
   @IsNotEmpty()
-  userName: string;
+  username: string;
 
   @ApiProperty({
     description: 'The password of account.',
@@ -28,7 +28,7 @@ export class ResponseAuthDto {
 
 export class ResponseProfileDto {
   @ApiProperty({
-    description: 'The userName of account.',
+    description: 'The username of account.',
   })
   username: string;
 
