@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose';
-import { UserRole } from 'src/shared/enum';
+import { UserRole } from '../../shared/enum';
 
 export const UserSchema = new mongoose.Schema(
   {

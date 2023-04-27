@@ -11,10 +11,10 @@ import {
 import { CreateTodoDto, ResponseTodoDto, UpdateTodoDto } from './todo.dto';
 import { TodoService } from './todo.service';
 import { ApiBearerAuth, ApiCreatedResponse, ApiTags } from '@nestjs/swagger';
-import { Roles } from 'src/decorator/auth.decorator';
-import { UserRole } from 'src/shared/enum';
-import { RolesGuard } from 'src/guard/role.guard';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { Roles } from '../../decorator/auth.decorator';
+import { UserRole } from '../../shared/enum';
+import { RolesGuard } from '../../guard/role.guard';
+import { JwtAuthGuard } from '../../guard/jwt-auth.guard';
 
 @ApiTags('todos')
 @Controller('todos')

@@ -1,4 +1,4 @@
-import { UserRole } from 'src/shared/enum';
+import { UserRole } from '../../shared/enum';
 import { User } from './user.interface';
 
 export class CreateUserDto implements Partial<User> {
