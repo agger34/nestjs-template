@@ -6,15 +6,24 @@ import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './local.strategy';
 import { JwtStrategy } from './jwt.strategy';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
     PassportModule,
     UserModule,
-    JwtModule.register({
+    // .env file is not yet read in when your JwtModule is instantiated.
+    // so we need to make the dependency first.
+    JwtModule.registerAsync({
       global: true,
-      secret: process.env.JWT_SECRET || 'h3it',
-      signOptions: { expiresIn: process.env.JWT_EXPIRES_IN || '600s' },
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get('JWT_SECRET'),
+        signOptions: {
+          expiresIn: configService.get('JWT_EXPIRES_IN'),
+        },
+      }),
+      inject: [ConfigService],
     }),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],
