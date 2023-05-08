@@ -1,9 +1,9 @@
 import { IsEnum, IsNotEmpty, IsOptional, IsString } from 'class-validator';
-import { Todo } from './todo.interface';
+import { ITodo } from './todo.interface';
 import { TodoStatus } from './todo.enum';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateTodoDto implements Partial<Todo> {
+export class CreateTodoDto implements Partial<ITodo> {
   @ApiProperty({
     description: 'The title of a todo',
     required: true,
@@ -21,7 +21,7 @@ export class CreateTodoDto implements Partial<Todo> {
   readonly description: string;
 }
 
-export class UpdateTodoDto implements Partial<Todo> {
+export class UpdateTodoDto implements Partial<ITodo> {
   @ApiProperty({
     description: 'The title of a todo',
     required: false,
@@ -49,7 +49,7 @@ export class UpdateTodoDto implements Partial<Todo> {
   status: TodoStatus;
 }
 
-export class ResponseTodoDto implements Partial<Todo> {
+export class ResponseTodoDto implements Partial<ITodo> {
   @ApiProperty({
     description: 'The title of a todo',
     required: false,

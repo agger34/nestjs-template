@@ -1,13 +1,15 @@
 import { Module } from '@nestjs/common';
-import { DatabaseModule } from '../../database/database.module';
 import { TodoController } from './todo.controller';
 import { TodoService } from './todo.service';
 import { TodoRepository } from './todo.repository';
-import { TodoProviders } from './todo.providers';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Todo, TodoSchema } from './todo.schema';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [
+    MongooseModule.forFeature([{ name: Todo.name, schema: TodoSchema }]),
+  ],
   controllers: [TodoController],
-  providers: [...TodoProviders, TodoRepository, TodoService],
+  providers: [TodoRepository, TodoService],
 })
 export class TodoModule {}

@@ -1,7 +1,7 @@
 import { Document } from 'mongoose';
 import { UserRole } from '../../shared/enum';
 
-export interface User extends Document {
+export interface IUser extends Document {
   readonly username: string;
   readonly password: string;
   readonly createdAt: Date;

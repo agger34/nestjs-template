@@ -2,8 +2,8 @@ import { INestApplication, Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { ScriptModule } from './script.module';
-import { UserRepository } from 'src/module/user/user.repository';
-// import { UserService } from 'src/module/user/user.service';
+import { UserRepository } from '../module/user/user.repository';
+// import { UserService } from '../module/user/user.service';
 import { error } from 'console';
 
 class Script {

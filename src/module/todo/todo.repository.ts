@@ -1,12 +1,14 @@
 import { Model } from 'mongoose';
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateTodoDto, ResponseTodoDto, UpdateTodoDto } from './todo.dto';
 import { TodoStatus } from './todo.enum';
+import { InjectModel } from '@nestjs/mongoose';
+import { Todo } from './todo.schema';
 
 @Injectable()
 export class TodoRepository {
   constructor(
-    @Inject('TODO_MODEL')
+    @InjectModel(Todo.name)
     private todoModel: Model<ResponseTodoDto>,
   ) {}
 
