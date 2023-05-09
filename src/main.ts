@@ -1,10 +1,14 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ValidationPipe, VersioningType } from '@nestjs/common';
+import {
+  ValidationPipe,
+  VersioningType,
+  Logger as NestLoger,
+} from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { WinstonModule } from 'nest-winston';
-import { format, transports } from 'winston';
+import { Logger, format, transports } from 'winston';
 import 'winston-daily-rotate-file';
 
 async function bootstrap() {
@@ -61,6 +65,9 @@ async function bootstrap() {
 
   const configService = app.get(ConfigService);
   const port = configService.get('APP_PORT') || 3000;
-  await app.listen(port);
+  await app.listen(port, () => {
+    const nestLogger = new NestLoger();
+    nestLogger.log(`My nest template app\'s running on ${port}`);
+  });
 }
 bootstrap();
