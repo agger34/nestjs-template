@@ -10,4 +10,10 @@ RUN npm ci
 # build
 RUN npm run build
 
-ENTRYPOINT  ["npm", "run", "start:prod"]
+# ENTRYPOINT  ["npm", "run", "start:prod"]
+
+# Set NODE_ENV environment variable
+ENV NODE_ENV production
+
+# Start the server using the production build
+CMD [ "node", "dist/main.js" ]

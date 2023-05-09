@@ -13,7 +13,7 @@ services:
       - APP_PORT=3000
       - MONGO_URI=mongodb://mongo:27017
       - JWT_SECRET=h3it
-      - JWT_EXPIRESIN=300s
+      - JWT_EXPIRES_IN=300s
     depends_on:
       - mongo
     ports:
