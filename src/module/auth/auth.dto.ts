@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsNotEmpty, isNotEmpty } from 'class-validator';
+import { IsNotEmpty } from 'class-validator';
+import { UserRole } from 'src/shared/enum';
 
 export class SignUpDto {
   @ApiProperty({
@@ -28,9 +29,19 @@ export class ResponseAuthDto {
 
 export class ResponseProfileDto {
   @ApiProperty({
+    description: 'The id of account.',
+  })
+  id: string;
+
+  @ApiProperty({
     description: 'The username of account.',
   })
   username: string;
+
+  @ApiProperty({
+    description: 'The roles of account.',
+  })
+  roles: [UserRole];
 
   @ApiProperty({
     description: 'The createdAt of account.',

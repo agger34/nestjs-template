@@ -4,7 +4,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from './module/auth/auth.module';
 import { UserModule } from './module/user/user.module';
 import { LoggerMiddleware } from './middleware/logger.middleware';
-import { MongooseModule } from '@nestjs/mongoose';
+import { DynamooseModule } from 'nestjs-dynamoose';
 
 @Module({
   imports: [
@@ -12,7 +12,9 @@ import { MongooseModule } from '@nestjs/mongoose';
     TodoModule,
     AuthModule,
     UserModule,
-    MongooseModule.forRoot(process.env.MONGO_URI),
+    DynamooseModule.forRoot({
+      local: process.env.DYNAMODB_ENDPOINT,
+    }),
   ],
 })
 export class AppModule {

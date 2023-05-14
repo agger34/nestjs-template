@@ -24,26 +24,63 @@
 
 [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 
+
+## Required
+
+```bash
+- nodejs
+- jdk
+```
+
 ## Installation
 
 ```bash
-npm install
+$ npm install serverless -g
+$ npm install
+
+# to sync 
+$ serverless plugin install -n serverless-plugin-optimize
+$ serverless plugin install -n serverless-dynamodb-local
+$ serverless plugin install -n serverless-offline
+
+# to install dynamondb
+$ serverless dynamodb install
+
 ```
 
-## Running the app
+## Running the app to develop
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-
-# via docker-compose
+# to run dynamodb locally
 $ docker-compose up -d
+
+# to create/update .env file
+
+# to run/debug app
+$ npm run start
+```
+
+
+## Running the app to test serverless
+
+```bash
+$ npm run start:serverless
+```
+
+## Running dynamodb-admin
+
+```bash
+# to install dynamodb-admin
+$ npm install -g dynamodb-admin
+
+# to set DYNAMO_ENDPOINT
+## linux
+$ export DYNAMO_ENDPOINT=http://localhost:8000
+## windows
+$ set DYNAMO_ENDPOINT=http://localhost:8000
+
+# to run dynamodb-admin
+$ dynamodb-admin
 ```
 
 ## Test
@@ -92,31 +129,9 @@ $ npm run test:cov
 
 ```
 
-### DTO
+## Note
 
-- is Data Transfer Object is to define the shape of the data that is sent between the client and server.
-
-- DTOs typically contain a subset of the properties of an entity or model, and are used for validation and data transformation. For example, when creating or updating a resource via an API, the client will send data in the form of a DTO, which is then validated and used to create or update the actual resource.
-- By using DTOs, you can ensure that the data being sent between the client and server is properly validated and structured, reducing the risk of errors and security issues. Additionally, DTOs can be used to hide or modify certain properties of an entity that you do not want to expose to the client, such as passwords or sensitive information.
-
-### Schema/Entity/Model
-
-- represents a concept or object in your application's domain model. The Entity or Model typically maps to a table or collection in a database, and is used to interact with the database provider.
-
-### Repository
-
-- is a common design pattern used in web development to separate the concerns of data access and manipulation from the rest of the application logic.
-- should only be responsible for the basic CRUD (Create, Read, Update, Delete) operations on the entity, not responsible for business logic of application like service layer.
-
-- One of the main benefits of using a separate Repository file is that it can help to decouple the data access logic from the business logic of your application. This can make your code more modular and easier to test, since you can test the data access logic separately from the rest of your application.
-- Another benefit of using a separate Repository file is that it can provide a level of abstraction between your application and the underlying database implementation. This can make it easier to switch to a different database implementation in the future(e.g. MongoDB instead of PostgreSQL), since you can simply update the Repository implementation to work with the new database.
-- Finally, using a separate Repository file can help to make your code more readable and maintainable, since it provides a clear separation between the data access logic and the rest of your application code.
-
-### Service
-
-- is responsible for providing the business logic of the application. ex: validation, business rules, workflow..
-
-- the service layer adds a layer of abstraction between the controller and the repository, providing a clear separation of concerns and helping to keep the codebase organized and maintainable.
+Currently, there's an issue with [serverless-dynamodb-local](https://github.com/99x/serverless-dynamodb-local/issues/294#issuecomment-1462496399), so I fixed temporarily `dynamodb-localhost": "github:99x/dynamodb-localhost#db30898f8c40932c7177be7b2f1a81360d12876d` in package. I will update it later.
 
 ## Support
 

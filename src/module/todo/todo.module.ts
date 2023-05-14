@@ -2,12 +2,20 @@ import { Module } from '@nestjs/common';
 import { TodoController } from './todo.controller';
 import { TodoService } from './todo.service';
 import { TodoRepository } from './todo.repository';
-import { MongooseModule } from '@nestjs/mongoose';
-import { Todo, TodoSchema } from './todo.schema';
+import { DynamooseModule } from 'nestjs-dynamoose';
+import { TODO_SCHEMA_NAME, TODO_TABLE_NAME, TodoSchema } from './todo.schema';
 
 @Module({
   imports: [
-    MongooseModule.forFeature([{ name: Todo.name, schema: TodoSchema }]),
+    DynamooseModule.forFeature([
+      {
+        name: TODO_SCHEMA_NAME,
+        schema: TodoSchema,
+        options: {
+          tableName: TODO_TABLE_NAME,
+        },
+      },
+    ]),
   ],
   controllers: [TodoController],
   providers: [TodoRepository, TodoService],

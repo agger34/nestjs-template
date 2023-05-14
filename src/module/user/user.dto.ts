@@ -8,7 +8,7 @@ export class CreateUserDto implements Partial<IUser> {
 }
 
 export class ResponseUserDto implements Partial<IUser> {
-  id?: string;
+  id: string;
   username: string;
   password?: string;
   roles?: [UserRole];

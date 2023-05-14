@@ -1,43 +1,48 @@
-import { Model } from 'mongoose';
 import { Injectable } from '@nestjs/common';
 import { CreateTodoDto, ResponseTodoDto, UpdateTodoDto } from './todo.dto';
 import { TodoStatus } from './todo.enum';
-import { InjectModel } from '@nestjs/mongoose';
-import { Todo } from './todo.schema';
+import { InjectModel, Model } from 'nestjs-dynamoose';
+import { TODO_SCHEMA_NAME } from './todo.schema';
+import { ITodo, ITodoKey } from './todo.interface';
+import { v4 as uuid } from 'uuid';
 
 @Injectable()
 export class TodoRepository {
   constructor(
-    @InjectModel(Todo.name)
-    private todoModel: Model<ResponseTodoDto>,
+    @InjectModel(TODO_SCHEMA_NAME)
+    private todoModel: Model<ITodo, ITodoKey>,
   ) {}
 
   async create(createTodoDto: CreateTodoDto): Promise<ResponseTodoDto> {
-    const createdCat = new this.todoModel({
+    return this.todoModel.create({
       ...createTodoDto,
+      id: uuid(),
       status: TodoStatus.TODO,
     });
-    return createdCat.save();
   }
 
   async findAll(): Promise<ResponseTodoDto[]> {
-    return this.todoModel.find().exec();
+    return this.todoModel.scan().exec();
   }
 
   async findById(id: string): Promise<ResponseTodoDto> {
-    return this.todoModel.findById(id).exec();
+    return this.todoModel.get({ id });
   }
 
   async update(
     id: string,
     updateTodoDto: UpdateTodoDto,
   ): Promise<ResponseTodoDto> {
-    return this.todoModel
-      .findByIdAndUpdate(id, updateTodoDto, { new: true })
-      .exec();
+    const { title, description, status } = updateTodoDto;
+    return this.todoModel.update({
+      id,
+      title,
+      description,
+      status,
+    });
   }
 
   async delete(id: string): Promise<void> {
-    await this.todoModel.findByIdAndDelete(id).exec();
+    return this.todoModel.delete({ id });
   }
 }

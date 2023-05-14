@@ -1,28 +1,32 @@
-import { UserRole } from '../../shared/enum';
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import * as dynamoose from 'dynamoose';
+import { UserRole } from 'src/shared/enum';
 
-@Schema()
-export class User {
-  @Prop()
-  username: string;
+export const USER_SCHEMA_NAME = 'User';
+export const USER_TABLE_NAME = 'user';
 
-  @Prop()
-  password: string;
-
-  @Prop({ default: UserRole.USER })
-  roles: [];
-}
-
-export const UserSchema = SchemaFactory.createForClass(User);
-
-// another declare TodoSchema
-// export const UserSchema = new mongoose.Schema(
-//   {
-//     username: String,
-//     password: String,
-//     roles: { type: [], default: [UserRole.USER] },
-//   },
-//   {
-//     timestamps: true,
-//   },
-// );
+export const UserSchema = new dynamoose.Schema(
+  {
+    id: {
+      type: String,
+      hashKey: true,
+      required: true,
+    },
+    username: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    roles: {
+      type: Array,
+      schema: [String],
+      required: true,
+      default: [UserRole.USER],
+    },
+  },
+  {
+    timestamps: true,
+  },
+);

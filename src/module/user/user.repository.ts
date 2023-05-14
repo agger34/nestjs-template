@@ -1,33 +1,41 @@
-import { Model } from 'mongoose';
-import { Injectable } from '@nestjs/common';
-import { IUser } from './user.interface';
 import { CreateUserDto, ResponseUserDto } from './user.dto';
-import { InjectModel } from '@nestjs/mongoose';
-import { User } from './user.schema';
+import { v4 as uuid } from 'uuid';
+import { IUserKey, IUser } from './user.interface';
+import { Injectable } from '@nestjs/common';
+import { InjectModel, Model } from 'nestjs-dynamoose';
+import { USER_SCHEMA_NAME } from './user.schema';
 
 @Injectable()
 export class UserRepository {
   constructor(
-    @InjectModel(User.name)
-    private userModel: Model<IUser>,
+    @InjectModel(USER_SCHEMA_NAME)
+    private userModel: Model<IUser, IUserKey>,
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<ResponseUserDto> {
-    const createdUser = new this.userModel({
-      ...createUserDto,
+    const { roles, username, password } = createUserDto;
+    const user = await this.userModel.create({
+      id: uuid(),
+      username,
+      password,
+      roles: roles,
     });
-    return createdUser.save();
+    return user;
   }
 
   async findAll(): Promise<ResponseUserDto[]> {
-    return this.userModel.find().exec();
+    return this.userModel.scan().exec();
   }
 
   async findById(id: string): Promise<ResponseUserDto> {
-    return this.userModel.findById(id).exec();
+    return this.userModel.get({ id });
   }
 
   async findOne(username: string): Promise<ResponseUserDto> {
-    return this.userModel.findOne({ username }).exec();
+    const users = await this.userModel.scan({ username }).exec();
+    if (users.length > 0) {
+      return users[0];
+    }
+    return null;
   }
 }

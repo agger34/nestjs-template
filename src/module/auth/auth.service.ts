@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Injectable,
   InternalServerErrorException,
+  Logger,
 } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
@@ -10,6 +11,7 @@ import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger();
   constructor(
     private usersService: UserService,
     private jwtService: JwtService,
@@ -36,7 +38,7 @@ export class AuthService {
         accessToken: await this.jwtService.signAsync(payload),
       } as ResponseAuthDto;
     } catch (error) {
-      console.log(error);
+      this.logger.error(error);
       throw new InternalServerErrorException();
     }
   }
@@ -60,7 +62,9 @@ export class AuthService {
   async getProfile(id: string): Promise<ResponseProfileDto> {
     const user = await this.usersService.findById(id);
     return {
+      id: user.id,
       username: user.username,
+      roles: user.roles,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
     };
@@ -79,7 +83,10 @@ export class AuthService {
 
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.usersService.findOne(username);
-    const isMatchPassword = await bcrypt.compare(password, user?.password);
+    const isMatchPassword = await bcrypt.compare(
+      password,
+      user?.password || '',
+    );
     if (isMatchPassword) {
       const payload = {
         username: user.username,

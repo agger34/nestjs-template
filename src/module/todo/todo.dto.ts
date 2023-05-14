@@ -72,11 +72,11 @@ export class ResponseTodoDto implements Partial<ITodo> {
     description: 'The createdAt of a todo',
     required: false,
   })
-  createdAt: Date;
+  createdAt?: Date;
 
   @ApiProperty({
     description: 'The updatedAt of a todo',
     required: false,
   })
-  updatedAt: Date;
+  updatedAt?: Date;
 }

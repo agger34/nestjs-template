@@ -8,7 +8,7 @@ import {
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { WinstonModule } from 'nest-winston';
-import { Logger, format, transports } from 'winston';
+import { format, transports } from 'winston';
 import 'winston-daily-rotate-file';
 
 async function bootstrap() {

@@ -34,3 +34,7 @@ lerna-debug.log*
 !.vscode/launch.json
 !.vscode/extensions.json
 .env
+
+# Dynamodb local
+.dynamodb
+/.vscode/*.json
