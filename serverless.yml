@@ -35,7 +35,7 @@ provider:
             - 'dynamodb:UpdateItem'
             - 'dynamodb:DeleteItem'
 
-          Resource: arn:aws:dynamodb:us-west-2:*:table/TodosTable
+          Resource: arn:aws:dynamodb:ap-northeast-1:*:table/TodosTable
 
 custom:
   esbuild:
@@ -76,6 +76,7 @@ resources:
           WriteCapacityUnits: 1
 
 plugins:
-  - serverless-plugin-optimize
   - serverless-dynamodb-local
-  - serverless-offline
+  - serverless-offline # emulates AWS λ and API Gateway on local machine
+  - serverless-jetpack # reduce packaging time
+  - serverless-optimizer-plugin # reducing the file size of your AWS Lambda Functions

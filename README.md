@@ -42,6 +42,7 @@ $ npm install
 $ serverless plugin install -n serverless-plugin-optimize
 $ serverless plugin install -n serverless-dynamodb-local
 $ serverless plugin install -n serverless-offline
+$ serverless plugin install -n serverless-jetpack
 
 # to install dynamondb
 $ serverless dynamodb install
@@ -94,6 +95,12 @@ $ npm run test:e2e
 
 # test coverage
 $ npm run test:cov
+```
+
+## Deployment
+
+```bash
+TBU
 ```
 
 ## Folder Structure
