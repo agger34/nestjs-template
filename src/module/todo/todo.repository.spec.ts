@@ -37,11 +37,13 @@ describe('TodoRepository', () => {
 
   it('findAll', async () => {
     // setup
-    const spyOnFind = jest.spyOn(todoModel, 'find').mockImplementation(() => {
-      return {
-        exec: () => mockResponseTodoDto,
-      };
-    });
+    const spyOnFind = jest
+      .spyOn(todoModel, 'find')
+      .mockImplementationOnce(() => {
+        return {
+          exec: () => mockResponseTodoDto,
+        };
+      });
 
     // run test
     await todoRepository.findAll();
@@ -52,7 +54,7 @@ describe('TodoRepository', () => {
 
   it('findById', async () => {
     // setup & mock
-    jest.spyOn(todoModel, 'findById').mockImplementation(() => {
+    jest.spyOn(todoModel, 'findById').mockImplementationOnce(() => {
       return {
         exec: () => mockResponseTodoDto,
       };
@@ -64,28 +66,28 @@ describe('TodoRepository', () => {
 
   it('update', async () => {
     // setup & mock
-    jest.spyOn(todoModel, 'findByIdAndUpdate').mockImplementation(() => {
+    jest.spyOn(todoModel, 'findByIdAndUpdate').mockImplementationOnce(() => {
       return {
         exec: () => mockResponseTodoDto,
       };
     });
 
     // assert
-    expect(await todoRepository.update(mockUpdateTodoDto)).toBe(
+    expect(await todoRepository.update(mockTodoId, mockUpdateTodoDto)).toBe(
       mockResponseTodoDto,
     );
   });
+
   it('delete', async () => {
     // setup & mock
     jest.spyOn(todoModel, 'findByIdAndDelete').mockImplementation(() => {
       return {
-        exec: () => {
-          return 111;
-        },
+        exec: () => mockResponseTodoDto,
       };
     });
+    await todoRepository.delete(mockTodoId);
 
     // assert
-    expect(await todoRepository.delete(mockTodoId)).toBe(mockResponseTodoDto);
+    expect(todoModel.findByIdAndDelete).toBeCalled();
   });
 });
