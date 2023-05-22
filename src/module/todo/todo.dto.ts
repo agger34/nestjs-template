@@ -51,6 +51,12 @@ export class UpdateTodoDto implements Partial<ITodo> {
 
 export class ResponseTodoDto implements Partial<ITodo> {
   @ApiProperty({
+    description: 'The id of a todo',
+    required: false,
+  })
+  id: string;
+
+  @ApiProperty({
     description: 'The title of a todo',
     required: false,
   })

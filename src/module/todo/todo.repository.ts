@@ -13,11 +13,10 @@ export class TodoRepository {
   ) {}
 
   async create(createTodoDto: CreateTodoDto): Promise<ResponseTodoDto> {
-    const createdCat = new this.todoModel({
+    return this.todoModel.create({
       ...createTodoDto,
       status: TodoStatus.TODO,
     });
-    return createdCat.save();
   }
 
   async findAll(): Promise<ResponseTodoDto[]> {
